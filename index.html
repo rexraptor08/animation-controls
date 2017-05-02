@@ -1,0 +1,115 @@
+<html>
+     
+  <head>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+      <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="js/aframe-extras.js"></script>
+    <script src="js/aframe-text-geometry-component.min.js"></script>
+      
+    <script>
+AFRAME.registerComponent('animation-control', {
+  schema: {default: ''},
+  init() {
+     
+    const bot = document.querySelector('#bot'); 
+      
+    this.el.addEventListener('click', () => {
+      //console.log(this.data);
+       
+        //cursor.setAttribute("a-animation","scale=2");
+        bot.setAttribute("animation-mixer",this.data);
+    });
+      
+      
+  }
+});
+</script>  
+         
+  </head>
+  <body>
+    <a-scene>
+     <a-assets>
+    <img id="sky" src="tex/space.jpg">
+    <img id="grid" src="tex/gridPattern.png" >
+    <img id="pink" src="tex/pink.jpg"> 
+    <img id="chrome" src="tex/chrome.jpg"> 
+    <a-asset-item id="dawningFont" src="font/dawningOfANewDayRegular.typeface.json"></a-asset-item>
+    <a-asset-item id="exoFont" src="font/exo2Black.typeface.json"></a-asset-item>
+    <a-asset-item id="exoItalicFont" src="font/Fexo2BlackItalic.typeface.json"></a-asset-item>    
+ 
+    </a-assets>
+
+        
+
+
+   <a-entity    id ="bot"
+                cursor-listener
+                scale="3.5 3.5 3.5"
+                position="0 1 -2.5"
+                rotation="0 0 0"
+                animation-mixer="clip: idle"
+               
+                json-model="src: url(models/bot4.json);"
+       
+      ></a-entity>   
+    
+  <a-camera position="0 2 4">
+   <a-entity 
+            raycaster="objects: .clickable"
+            cursor="fuse: true; fuseTimeout: 500"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: green; shader: flat">
+  <a-animation begin="click" easing="ease-in" attribute="scale"
+               fill="backwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
+  <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale"
+               fill="forwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
+</a-entity>
+      
+  </a-camera>
+         
+    
+        
+   <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+        
+        
+    <a-entity position="-4 1 -6" rotation="5 0 0">
+        <a-entity
+          rotation="0 0 0"
+          position="-2 8 0"
+          text-geometry="value: Character Controls; font: #dawningFont; bevelEnabled: true; bevelSize: 0.05; bevelThickness: 0.05; curveSegments: 12; size: 1.2; height: 0;"
+          material="color:lavenderblush; metalness:1; roughness: 0; sphericalEnvMap: #pink;"
+        ></a-entity>
+        
+       <a-entity class="clickable" animation-control="clip: run; crossFadeDuration: .3" position="1 3 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: RUN; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+        
+        <a-entity class="clickable" animation-control="clip: walk; crossFadeDuration: .3" position="5.5 3 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: WALK; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+        
+        <a-entity class="clickable" animation-control="clip: jump; crossFadeDuration: .3" position="5.5 4 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: JUMP; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+        
+        <a-entity class="clickable" animation-control="clip: idle; crossFadeDuration: .3" position="1 4 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: IDLE; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+       </a-entity> 
+        
+        <a-entity
+        geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-entity>
+        
+     <a-entity light="color: #ccccff; intensity: 1; type: ambient;" visible=""></a-entity>
+      <a-entity light="color: #ffaaff; intensity: 1.5" position="5 5 5"></a-entity>
+      <a-entity light="color: #8498b2; intensity: 0.5" position="-5 5 15"></a-entity>
+      <a-entity light="color: white; type: ambient;"></a-entity>
+
+    
+      </a-scene>
+      
+      
+      
+        
+      
+      <script>   
+        
+    //setTimeout(function(){ document.querySelector('#bot').setAttribute("animation-mixer","clip: jump; crossFadeDuration: .3"); },5000);
+        
+      </script>
+  <body>
+</html>
