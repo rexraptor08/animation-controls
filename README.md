@@ -1,4 +1,4 @@
-# animation-control
+# Animation-Controls
 Example of using aframe-extras animation-mixer component with json model.
 
 View the working example here: [Animation Controls](https://rexraptor08.github.io/animation-controls/)
