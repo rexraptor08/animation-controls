@@ -1,9 +1,9 @@
 # Animation-Controls
 Example of using aframe-extras animation-mixer component with json model.
 
-View the working example here: [Animation Controls](https://rexraptor08.github.io/animation-controls/)
-
 The example shows how to smoothly transion between different animation states of a character model exported from blender as json. Just hover the reticle over the shiny words to trigger different animation states.
+
+View the working example here: [Animation Controls](https://rexraptor08.github.io/animation-controls/)
 
 You can learn more about the animation-mixer created by [Don McCurdy](https://github.com/donmccurdy) at this link: [animation-mixer](https://github.com/donmccurdy/aframe-extras/blob/master/src/loaders/README.md).
 
