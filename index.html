@@ -8,7 +8,13 @@
       
     <script>
     
-    var prevData;
+    var prevData = "clip: idle; crossFadeDuration: .3";;
+    var listenerAdded = false;
+    var scene = document.querySelector('a-scene');  
+    var playOnce = false; 
+ 
+   
+    
         
 AFRAME.registerComponent('animation-control', {
   schema: {default: ''},
@@ -20,33 +26,32 @@ AFRAME.registerComponent('animation-control', {
     var walkBut = document.querySelector('#walk');
     var idleBut = document.querySelector('#idle');  
     var scene = document.querySelector('a-scene');
+    
+   
+  
+  this.el.addEventListener('click', () => {
         
-    this.el.addEventListener('click', () => {
-                   
-     if (this.el != jumpBut){     
-         scene.removeEventListener('animation-loop', function () { bot.setAttribute("animation-mixer",prevData);});
+      if (this.el != jumpBut){  
+        bot.setAttribute("animation-mixer",this.data); 
+         scene.removeEventListener('animation-loop', jumpTrans);
          prevData = this.data;
-         console.log("prevData ="+prevData);  
+         
      }
         
      if (this.el == jumpBut) {
-         
-        console.log("prev data from jump button = "+prevData);
-        if (prevData == undefined){
-            
-           prevData = "clip: idle; crossFadeDuration: .3";
-        } 
-         
-        scene.addEventListener('animation-loop', 
-        function () { bot.setAttribute("animation-mixer",prevData);
-                    
-        scene.removeEventListener('animation-loop', null);            
-                    });
-       //prevData = "clip: idle; crossFadeDuration: .3"; 
+        
+        bot.setAttribute("animation-mixer",this.data); 
+        var jumpTrans = function () {scene.removeEventListener('animation-loop',jumpTrans); bot.setAttribute("animation-mixer",prevData);console.log("scene ="+scene); console.log("fire")};  
+        console.log("prev data from jump button = "+prevData); 
+       setTimeout (function(){scene.addEventListener('animation-loop',jumpTrans);},500);     
+     
      }
         
-     bot.setAttribute("animation-mixer",this.data);  
+     
     }); 
+      
+      
+      
   }
 });
 </script>  
