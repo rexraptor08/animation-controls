@@ -1,5 +1,4 @@
-<!DOCTYPE html>
- <html>
+<html>
      
   <head>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -8,20 +7,46 @@
     <script src="js/aframe-text-geometry-component.min.js"></script>
       
     <script>
+    
+    var prevData;
+        
 AFRAME.registerComponent('animation-control', {
   schema: {default: ''},
   init() {
      
     const bot = document.querySelector('#bot'); 
-      
+    var jumpBut = document.querySelector('#jump');
+    var runBut = document.querySelector('#run');
+    var walkBut = document.querySelector('#walk');
+    var idleBut = document.querySelector('#idle');  
+    var scene = document.querySelector('a-scene');
+        
     this.el.addEventListener('click', () => {
-      //console.log(this.data);
-       
-        //cursor.setAttribute("a-animation","scale=2");
-        bot.setAttribute("animation-mixer",this.data);
-    });
-      
-      
+                   
+     if (this.el != jumpBut){     
+         scene.removeEventListener('animation-loop', function () { bot.setAttribute("animation-mixer",prevData);});
+         prevData = this.data;
+         console.log("prevData ="+prevData);  
+     }
+        
+     if (this.el == jumpBut) {
+         
+        console.log("prev data from jump button = "+prevData);
+        if (prevData == undefined){
+            
+           prevData = "clip: idle; crossFadeDuration: .3";
+        } 
+         
+        scene.addEventListener('animation-loop', 
+        function () { bot.setAttribute("animation-mixer",prevData);
+                    
+        scene.removeEventListener('animation-loop', null);            
+                    });
+       //prevData = "clip: idle; crossFadeDuration: .3"; 
+     }
+        
+     bot.setAttribute("animation-mixer",this.data);  
+    }); 
   }
 });
 </script>  
@@ -82,13 +107,13 @@ AFRAME.registerComponent('animation-control', {
           material="color:lavenderblush; metalness:1; roughness: 0; sphericalEnvMap: #pink;"
         ></a-entity>
         
-       <a-entity class="clickable" animation-control="clip: run; crossFadeDuration: .3" position="1 3 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: RUN; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+       <a-entity id= "run" class="clickable" animation-control="clip: run; crossFadeDuration: .3" position="1 3 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: RUN; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
         
-        <a-entity class="clickable" animation-control="clip: walk; crossFadeDuration: .3" position="5.5 3 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: WALK; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+        <a-entity id= "walk" class="clickable" animation-control="clip: walk; crossFadeDuration: .3" position="5.5 3 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: WALK; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
         
-        <a-entity class="clickable" animation-control="clip: jump; crossFadeDuration: .3" position="5.5 4 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: JUMP; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+        <a-entity id= "jump" class="clickable" animation-control="clip: jump; crossFadeDuration: .3;" position="5.5 4 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: JUMP; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
         
-        <a-entity class="clickable" animation-control="clip: idle; crossFadeDuration: .3" position="1 4 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: IDLE; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
+        <a-entity id="idle" class="clickable" animation-control="clip: idle; crossFadeDuration: .3" position="1 4 4" rotation="0 0 0" scale="0.5 .6 .3" text-geometry="value: IDLE; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1; height: 0.5;" material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"></a-entity> 
        </a-entity> 
         
         <a-entity
